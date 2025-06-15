@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Travel Blog | TravelCo{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title" data-aos="fade-up">TravelCo Blog</h1>
+            <p class="fs-5 text-text-light" style="max-width: 600px; margin-left: auto; margin-right: auto;" data-aos="fade-up" data-aos-delay="100">
+                Stories, guides, and inspiration from our world of travel.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {% for post in posts %}
+                <div class="card tour-card glass mb-5" data-aos="fade-up">
+                    {% if post.image %}
+                    <a href="{% url 'post_detail' post.slug %}">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="border-radius: 1.25rem 1.25rem 0 0;">
+                    </a>
+                    {% endif %}
+                    <div class="card-body p-4 p-md-5">
+                        <div class="mb-3 d-flex flex-wrap align-items-center gap-3 text-text-light">
+                            <span><i class="fa-solid fa-user-pen me-2 text-accent"></i>{{ post.author.username }}</span>
+                            <span><i class="fa-solid fa-calendar-days me-2 text-accent"></i>{{ post.created_at|date:"F d, Y" }}</span>
+                            {% if post.category %}
+                            <span><i class="fa-solid fa-tag me-2 text-accent"></i>{{ post.category.name }}</span>
+                            {% endif %}
+                        </div>
+                        <h2 class="card-title fs-2 fw-bold mb-3">
+                            <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-primary">{{ post.title }}</a>
+                        </h2>
+                        <p class="card-text fs-5 text-text-light">{{ post.content|truncatewords:40|linebreaks }}</p>
+                        <a href="{% url 'post_detail' post.slug %}" class="btn btn-custom mt-4">Read More →</a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5" data-aos="fade-up">
+                    <i class="fa-solid fa-feather-pointed display-1 text-accent mb-4"></i>
+                    <h3 class="fs-2 fw-semibold">The Ink is Still Dry!</h3>
+                    <p class="text-text-light fs-5">No blog posts have been published yet. Check back soon for amazing stories.</p>
+                </div>
+                {% endfor %}
+
+                <!-- Pagination -->
+                {% if is_paginated %}
+                <nav aria-label="Page navigation" class="d-flex justify-content-center">
+                    <ul class="pagination pagination-lg">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">«</a></li>
+                        {% else %}
+                        <li class="page-item disabled"><span class="page-link">«</span></li>
+                        {% endif %}
+
+                        {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                        <li class="page-item active" aria-current="page"><span class="page-link">{{ i }}</span></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">»</a></li>
+                        {% else %}
+                        <li class="page-item disabled"><span class="page-link">»</span></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
