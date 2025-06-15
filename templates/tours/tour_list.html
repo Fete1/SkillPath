@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load promotion_tags %} <!-- This is needed for the 'mul' filter for animation delay -->
+
+{% block title %}Our Tours | TravelCo{% endblock %}
+
+{% block content %}
+<section class="py-5 relative z-10">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="text-center mb-5">
+            <h1 class="section-title" data-aos="fade-up">Explore Our Tours</h1>
+            <p class="fs-5 text-text-light" style="max-width: 600px; margin-left: auto; margin-right: auto;" data-aos="fade-up" data-aos-delay="100">
+                From historical walks to breathtaking nature hikes, find the perfect experience curated just for you.
+            </p>
+        </div>
+
+        {% if tour_list %}
+        <!-- Grid of Tour Cards -->
+        <div class="row g-4">
+            {% for tour in tour_list %}
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|mul:100 }}">
+                <!--
+                The card combines Bootstrap's `.card` with your custom `.tour-card` & `.glass` classes.
+                Using `.h-100` (height: 100%) and flex utilities ensures all cards in a row have equal height.
+                -->
+                <div class="card tour-card glass h-100 w-100 border-0 overflow-hidden d-flex flex-column">
+                    <div class="position-relative">
+                        <!-- We use the city's image, with a fallback -->
+                        {% if tour.city.image %}
+                            <img src="{{ tour.city.image.url }}" class="card-img-top" alt="{{ tour.name }}" style="height: 220px; object-fit: cover;">
+                        {% else %}
+                            <img src="https://picsum.photos/600/350?random={{ tour.id }}" class="card-img-top" alt="{{ tour.name }}" style="height: 220px; object-fit: cover;">
+                        {% endif %}
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-3 fs-6 shadow">{{ tour.city.name }}</span>
+                    </div>
+                    <div class="card-body d-flex flex-column p-4">
+                        <h5 class="card-title fs-4 fw-bold mb-2">{{ tour.name }}</h5>
+                        <p class="card-text text-text-light mb-4">{{ tour.description|truncatewords:20 }}</p>
+
+                        <!-- This div with .mt-auto is pushed to the bottom of the card, ensuring button alignment -->
+                        <div class="mt-auto pt-3 border-top" style="border-color: rgba(128,128,128,0.2) !important;">
+                             <div class="d-flex justify-content-between align-items-center">
+                                <span class="fs-3 fw-bold text-accent">${{ tour.price|floatformat:0 }}</span>
+                                <a href="{% url 'tour_detail' tour.slug %}" class="btn btn-custom btn-primary fw-bold">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- A nicely styled message for when no tours are available -->
+        <div class="text-center py-5" data-aos="fade-up">
+            <i class="fa-solid fa-compass display-1 text-accent mb-4"></i>
+            <h3 class="fs-2 fw-semibold mb-2">The Adventure Map is Empty!</h3>
+            <p class="text-text-light fs-5">No tours are available at the moment. Please check back soon as we're always adding new experiences.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
