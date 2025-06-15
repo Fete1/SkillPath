@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
-    'crispy_bootstrap5',  # <-- CORRECTION: Use bootstrap5 pack for your templates
+    'crispy_bootstrap4',  # <-- CORRECTION: Use bootstrap5 pack for your templates
     'core.apps.CoreConfig',
     'tours.apps.ToursConfig',
     'users.apps.UsersConfig',
@@ -86,8 +86,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'travel_platform.wsgi.application'
 
 # Use bootstrap5 crispy forms pack to match your templates
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" # <-- MODIFICATION
-CRISPY_TEMPLATE_PACK = 'bootstrap5'      # <-- MODIFICATION
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4" # <-- MODIFICATION
+CRISPY_TEMPLATE_PACK = 'bootstrap4'      # <-- MODIFICATION
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
