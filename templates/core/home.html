@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}TravelCo - Home{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="relative d-flex align-items-center justify-content-center min-vh-100 py-5 px-4" style="z-index:1;">
+    <div class="position-absolute top-0 start-0 w-100 h-100 hero-overlay"></div>
+    <div class="container position-relative z-1 text-center py-5">
+        <h1 class="hero-title text-primary" data-aos="fade-up" data-aos-delay="100">
+            Discover Your Next Great Adventure
+        </h1>
+        <p class="mt-4 mb-5 fs-5 text-text-light" data-aos="fade-up" data-aos-delay="220">
+            Unforgettable tours, curated destinations, and experiences that last a lifetime.<br>Where will you go next?
+        </p>
+        <a href="{% url 'tour_list' %}" class="btn btn-custom btn-lg px-5 py-3 fw-bold bg-accent  glass" data-aos="zoom-in" data-aos-delay="340">
+            <i class="fa-solid fa-location-dot me-2"></i> Explore All Tours
+        </a>
+    </div>
+</section>
+
+<!-- FEATURED TOURS -->
+<section class="py-5 relative z-1">
+    <div class="container px-4">
+        <h2 class="section-title text-center" data-aos="fade-up">Featured Tours</h2>
+        <div class="row g-4 mt-4">
+            <!-- Tour 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="tour-card glass overflow-hidden d-flex flex-column h-100" data-aos="fade-up" data-aos-delay="100">
+                    <div class="position-relative">
+                        <img src="https://picsum.photos/id/1015/600/350" alt="Ancient Rome & Colosseum Tour" class="img-fluid w-100" style="height: 200px; object-fit: cover;">
+                        <span class="position-absolute top-0 start-0 m-3 bg-accent text-white px-3 py-1 rounded-pill fs-6 fw-semibold shadow">Popular</span>
+                    </div>
+                    <div class="p-4 flex-grow-1">
+                        <h5 class="fs-4 fw-semibold mb-2">Ancient Rome & Colosseum Tour</h5>
+                        <p class="text-text-light mb-4">Walk through history in the heart of the Roman Empire. A must-see for every traveler.</p>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <a href="#" class="btn btn-custom w-100 py-3 fw-bold bg-primary text-white">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tour 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="tour-card glass overflow-hidden d-flex flex-column h-100" data-aos="fade-up" data-aos-delay="200">
+                    <div class="position-relative">
+                        <img src="https://picsum.photos/id/1018/600/350" alt="Kyoto Temples & Zen Gardens" class="img-fluid w-100" style="height: 200px; object-fit: cover;">
+                        <span class="position-absolute top-0 start-0 m-3 bg-primary text-white px-3 py-1 rounded-pill fs-6 fw-semibold shadow">New</span>
+                    </div>
+                    <div class="p-4 flex-grow-1">
+                        <h5 class="fs-4 fw-semibold mb-2">Kyoto Temples & Zen Gardens</h5>
+                        <p class="text-text-light mb-4">Find your inner peace exploring the serene temples and beautiful gardens of Kyoto.</p>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <a href="#" class="btn btn-custom w-100 py-3 fw-bold bg-primary text-white">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tour 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="tour-card glass overflow-hidden d-flex flex-column h-100" data-aos="fade-up" data-aos-delay="300">
+                    <div class="position-relative">
+                        <img src="https://picsum.photos/id/1025/600/350" alt="Machu Picchu Sunrise Hike" class="img-fluid w-100" style="height: 200px; object-fit: cover;">
+                        <span class="position-absolute top-0 start-0 m-3 bg-accent text-white px-3 py-1 rounded-pill fs-6 fw-semibold shadow">Trending</span>
+                    </div>
+                    <div class="p-4 flex-grow-1">
+                        <h5 class="fs-4 fw-semibold mb-2">Machu Picchu Sunrise Hike</h5>
+                        <p class="text-text-light mb-4">An unforgettable trek to witness the sunrise over the lost city of the Incas.</p>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <a href="#" class="btn btn-custom w-100 py-3 fw-bold bg-primary text-white">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
