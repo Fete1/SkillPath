@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'reviews.apps.ReviewsConfig',
     'promotions.apps.PromotionsConfig',
-    'affiliates.apps.AffiliatesConfig',
+    'affiliates,
     'accounts.apps.AccountsConfig',
     'support.apps.SupportConfig',
 ]
