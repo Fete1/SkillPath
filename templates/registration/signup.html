@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Join TravelCo | Sign Up{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5" data-aos="fade-up">
+                <div class="card glass tour-card p-4 p-md-5">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <i class="fa-solid fa-rocket fs-1 text-accent"></i>
+                            <h2 class="section-title mt-3 mb-0">Create Your Account</h2>
+                            <p class="text-text-light">Start your next adventure with us!</p>
+                        </div>
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <!-- Display any non-field errors (e.g., global form issues) at the top -->
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger p-2 text-center" role="alert">{{ error }}</div>
+                            {% endfor %}
+
+                            <!-- Username Field with Icon -->
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label fw-semibold">Username</label>
+                                <div class="position-relative">
+                                    <span class="position-absolute top-50 translate-middle-y" style="left: 15px; color: var(--text-light);"><i class="fa-solid fa-user"></i></span>
+                                    {{ form.username }}
+                                </div>
+                                {% for error in form.username.errors %}
+                                    <div class="text-danger mt-1 fs-sm">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Email Field with Icon -->
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold">Email</label>
+                                <div class="position-relative">
+                                    <span class="position-absolute top-50 translate-middle-y" style="left: 15px; color: var(--text-light);"><i class="fa-solid fa-envelope"></i></span>
+                                    {{ form.email }}
+                                </div>
+                                {% for error in form.email.errors %}
+                                    <div class="text-danger mt-1 fs-sm">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Password 1 Field with Icon -->
+                            <div class="mb-3">
+                                <label for="{{ form.password1.id_for_label }}" class="form-label fw-semibold">Password</label>
+                                <div class="position-relative">
+                                    <span class="position-absolute top-50 translate-middle-y" style="left: 15px; color: var(--text-light);"><i class="fa-solid fa-lock"></i></span>
+                                    <input type="password" name="password" id="{{ form.password1.id_for_label }}" class="form-control form-control-lg" placeholder="Create a strong password" required>
+                                </div>
+                                {% for error in form.password1.errors %}
+                                    <div class="text-danger mt-1 fs-sm">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Password 2 Field with Icon -->
+                            <div class="mb-4">
+                                <label for="{{ form.password2.id_for_label }}" class="form-label fw-semibold">Confirm Password</label>
+                                <div class="position-relative">
+                                    <span class="position-absolute top-50 translate-middle-y" style="left: 15px; color: var(--text-light);"><i class="fa-solid fa-check-double"></i></span>
+                                    <input type="password" name="password2" id="{{ form.password2.id_for_label }}" class="form-control form-control-lg" placeholder="Repeat your password" required>
+                                </div>
+                                {% for error in form.password2.errors %}
+                                    <div class="text-danger mt-1 fs-sm">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <style>
+                                /* Small CSS tweak to make room for the icons */
+                                .form-control {
+                                    padding-left: 40px !important;
+                                }
+                            </style>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-custom bg-accent text-white btn-lg fw-bold">Sign Up →</button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-4">
+                            <p class="text-text-light">Already a traveler? <a href="{% url 'login' %}" class="fw-bold text-accent text-decoration-none">Log In</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
