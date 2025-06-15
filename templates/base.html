@@ -1,0 +1,383 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}TravelCo{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <!-- AOS Animation -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <style>
+        html {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            transition: background 0.6s cubic-bezier(.4,0,.2,1), color 0.3s;
+        }
+        :root {
+            --primary: #1967d2;
+            --accent: #22d3ee;
+            --white: #fff;
+            --glass: rgba(255,255,255,0.70);
+            --bg-gradient: linear-gradient(120deg, #e0ecff 0%, #f8fafc 100%);
+            --text-main: #22223b;
+            --text-light: #767b91;
+            --shadow-soft: 0 4px 32px 0 rgba(25,103,210,0.12);
+            --noisy: url('https://www.transparenttextures.com/patterns/noise.png');
+        }
+        [data-theme="dark"] {
+            --primary: #1e293b;
+            --accent: #38bdf8;
+            --white: #131e2a;
+            --glass: rgba(24,32,48,0.7);
+            --bg-gradient: linear-gradient(120deg, #15191f 0%, #232b36 100%);
+            --text-main: #e5e7eb;
+            --text-light: #94a3b8;
+            --shadow-soft: 0 4px 32px 0 rgba(56,189,248,0.08);
+            --noisy: url('https://www.transparenttextures.com/patterns/noise.png');
+        }
+        /* Glassmorphism */
+        .glass {
+            background: var(--glass);
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.13);
+            backdrop-filter: blur(13px) saturate(1.3);
+            -webkit-backdrop-filter: blur(13px) saturate(1.3);
+            border-radius: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.22);
+        }
+        /* Custom Button Styles */
+        .btn-custom {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: 4px 4px 18px 0 #dbeafe, -4px -4px 18px 0 #ffffff;
+            border-radius: 1em;
+            transition: box-shadow .3s, background .3s, color .3s;
+        }
+        .btn-custom:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn-custom:active {
+            box-shadow: 1px 1px 8px 0 #dbeafe, -1px -1px 8px 0 #ffffff;
+        }
+        /* Card Styles */
+        .tour-card {
+            box-shadow: var(--shadow-soft);
+            background: var(--glass);
+            backdrop-filter: blur(7px) saturate(1.25);
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+            border-radius: 1.25rem;
+        }
+        .tour-card:hover {
+            box-shadow: 0 12px 32px 0 rgba(34,211,238,0.18);
+            transform: translateY(-9px) scale(1.03);
+            background: rgba(255,255,255,0.85);
+        }
+        [data-theme="dark"] .tour-card:hover {
+            background: rgba(30,41,59,0.85);
+        }
+        /* Hero Overlay */
+        .hero-overlay {
+            background: linear-gradient(120deg,rgba(25,103,210,0.31),rgba(34,211,238,0.21)),var(--noisy);
+            border-radius: 2.5rem;
+        }
+        [data-theme="dark"] .hero-overlay {
+            background: linear-gradient(120deg,rgba(56,189,248,0.37),rgba(30,41,59,0.31)),var(--noisy);
+        }
+        /* Section Titles */
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: .01em;
+            margin-bottom: 1.5rem;
+        }
+        [data-theme="dark"] .section-title {
+            color: var(--accent);
+        }
+        /* Footer Links */
+        .footer-link:hover {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        /* Dark Mode Toggle */
+        .toggle-switch {
+            width: 52px;
+            height: 28px;
+            background: var(--glass);
+            border-radius: 16px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(25,103,210,0.09);
+            transition: background .3s;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2px;
+        }
+        .toggle-switch[data-active="true"] {
+            background: var(--accent);
+            justify-content: flex-end;
+        }
+        .toggle-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--white);
+            box-shadow: 0 1px 7px 0 rgba(25,103,210,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: background .3s;
+        }
+        .toggle-switch[data-active="true"] .toggle-thumb {
+            background: var(--primary);
+            color: #fff;
+        }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--bg-gradient);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 9px;
+        }
+        /* Responsive Typography */
+        h1, .hero-title {
+            font-size: clamp(2.2rem, 7vw, 3.7rem);
+            font-weight: 700;
+            line-height: 1.12;
+        }
+        h2, .section-title {
+            font-size: clamp(1.6rem, 4vw, 2.7rem);
+        }
+        /* Animated Background Bubbles */
+        .bg-bubbles {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: .23;
+            animation: floatUp 18s ease-in infinite;
+            will-change: transform;
+        }
+        .bubble1 { width: 100px; height: 100px; left: 3vw; bottom: -120px; background: var(--accent); animation-delay: 0s;}
+        .bubble2 { width: 60px; height: 60px; right: 9vw; bottom: -70px; background: var(--primary); animation-delay: 2.5s;}
+        .bubble3 { width: 130px; height: 130px; left: 55vw; bottom: -150px; background: var(--primary); animation-delay: 4.2s;}
+        .bubble4 { width: 75px; height: 75px; right: 20vw; bottom: -85px; background: var(--accent); animation-delay: 1.2s;}
+        .bubble5 { width: 45px; height: 45px; left: 80vw; bottom: -60px; background: var(--primary); animation-delay: 3.7s;}
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1);}
+            80% { opacity: .25;}
+            100% { transform: translateY(-95vh) scale(1.10); opacity: 0;}
+        }
+    </style>
+</head>
+<body class="relative" style="background: var(--bg-gradient);">
+
+    <div class="bg-bubbles z-0">
+        <div class="bubble bubble1"></div>
+        <div class="bubble bubble2"></div>
+        <div class="bubble bubble3"></div>
+        <div class="bubble bubble4"></div>
+        <div class="bubble bubble5"></div>
+    </div>
+
+    <!-- HEADER & NAVBAR -->
+    <header class="relative z-10">
+        <nav class="navbar navbar-expand-md fixed-top glass shadow-lg" id="mainNavbar">
+            <div class="container">
+                <!-- Brand Logo -->
+                <a class="navbar-brand font-bold text-2xl text-primary" href="{% url 'home' %}">
+                    <i class="fa-solid fa-earth-europe me-2 text-accent"></i>TravelCo
+                </a>
+                <!-- Hamburger Toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <!-- Navbar Content -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-2" href="{% url 'tour_list' %}">Tours</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-2" href="{% url 'post_list' %}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-2" href="#">Help Center</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle px-3 py-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Welcome, {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{% url 'dashboard' %}">Myetic Dashboard</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item text-danger">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-custom mx-2" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-custom bg-accent text-white border-accent" href="{% url 'signup' %}">Sign Up</a>
+                        </li>
+                        {% endif %}
+                        <!-- Dark/Light Toggle -->
+                        <li class="nav-item ms-3">
+                            <div id="themeToggle" class="toggle-switch" title="Toggle dark/light mode" data-active="false" tabindex="0" role="switch" aria-checked="false">
+                                <span class="toggle-thumb d-flex align-items-center justify-content-center">
+                                    <i class="fa-regular fa-moon" id="themeIcon"></i>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="relative z-10 pt-5 mt-5">
+        {% block content %}
+        {% endblock %}
+    </main>
+<!-- FOOTER -->
+<footer class="py-5 bg-primary text-white mt-5 relative z-20">
+    <div class="container px-4">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <p class="mb-2 text-lg font-semibold">© {% now "Y" %} TravelCo. All Rights Reserved.</p>
+                <p class="mb-0 text-sm opacity-80">Your Adventure Awaits.</p>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex flex-column flex-md-row justify-content-md-end gap-3">
+                    <a href="https://twitter.com" class="footer-link text-white opacity-80 hover:opacity-100 transition">
+                        <i class="fa-brands fa-twitter me-2"></i>Twitter
+                    </a>
+                    <a href="https://instagram.com" class="footer-link text-white opacity-80 hover:opacity-100 transition">
+                        <i class="fa-brands fa-instagram me-2"></i>Instagram
+                    </a>
+                    <a href="https://facebook.com" class="footer-link text-white opacity-80 hover:opacity-100 transition">
+                        <i class="fa-brands fa-facebook me-2"></i>Facebook
+                    </a>
+                    <a href="#" class="footer-link text-white opacity-80 hover:opacity-100 transition">
+                        <i class="fa-solid fa-envelope me-2"></i>Newsletter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- JS LIBRARIES -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize AOS animations
+            AOS.init({
+                once: true,
+                duration: 850,
+                offset: 60,
+            });
+
+            // Dark/Light Mode Toggle
+            const root = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (themeToggle && themeIcon) {
+                let isDark = false;
+                function setTheme(dark) {
+                    isDark = dark;
+                    if (dark) {
+                        root.setAttribute('data-theme', 'dark');
+                        themeToggle.setAttribute('data-active', 'true');
+                        themeToggle.setAttribute('aria-checked', 'true');
+                        themeIcon.classList.remove('fa-moon');
+                        themeIcon.classList.add('fa-sun');
+                    } else {
+                        root.setAttribute('data-theme', 'light');
+                        themeToggle.setAttribute('data-active', 'false');
+                        themeToggle.setAttribute('aria-checked', 'false');
+                        themeIcon.classList.add('fa-moon');
+                        themeIcon.classList.remove('fa-sun');
+                    }
+                }
+                themeToggle.addEventListener('click', () => {
+                    console.log('Toggling theme');
+                    setTheme(!isDark);
+                });
+                themeToggle.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        console.log('Toggling theme via keyboard');
+                        setTheme(!isDark);
+                    }
+                });
+                // Set theme based on system preference
+                try {
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    setTheme(prefersDark);
+                } catch (e) {
+                    console.error('Error setting theme:', e);
+                    setTheme(false);
+                }
+            } else {
+                console.error('Theme toggle elements not found');
+            }
+
+            // Navbar Shadow on Scroll
+            const mainNavbar = document.getElementById('mainNavbar');
+            if (mainNavbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 30) {
+                        mainNavbar.classList.add('shadow-lg');
+                    } else {
+                        mainNavbar.classList.remove('shadow-lg');
+                    }
+                });
+            } else {
+                console.error('Main navbar not found');
+            }
+
+            // Ensure Bootstrap dropdowns work (optional, as Bootstrap handles this)
+            const dropdowns = document.querySelectorAll('.dropdown-toggle');
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('click', () => {
+                    console.log('Dropdown toggled');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
